@@ -2,3 +2,5 @@
 /.gradle/
 /run/
 /build/
+
+.idea

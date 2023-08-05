@@ -25,7 +25,7 @@ public final class PlayerCommandPreProcessListener implements Listener {
         Player player = event.getPlayer();
         String[] args = event.getMessage().split(" ");
         if (inventoryService.containsUser(player.getUniqueId())) {
-            if (!configuration.getSet().contains(args[0])) {
+            if (!configuration.commands.contains(args[0])) {
                 event.setCancelled(true);
                 player.sendMessage(ChatHelper.colored(LanguageContainer.translate("message", String.class)));
             }

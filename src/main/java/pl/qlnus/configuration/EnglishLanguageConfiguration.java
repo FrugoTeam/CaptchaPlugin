@@ -1,15 +1,19 @@
 package pl.qlnus.configuration;
 
-import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
+import eu.okaeri.configs.annotation.Exclude;
 import me.cocos.gui.builder.item.impl.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public final class EnglishLanguageConfiguration extends OkaeriConfig {
+public final class EnglishLanguageConfiguration extends LanguageConfiguration {
+    @Exclude
+    private final Map<String, Object> translations;
     @Comment("Message displayed after an incorrect captcha attempt")
     private String kickMessage = "&cAn error occurred during verification";
     @Comment("GUI name (letter-based)")
@@ -24,31 +28,21 @@ public final class EnglishLanguageConfiguration extends OkaeriConfig {
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Click the letter &e%letter% &7above to complete &averification", " ").asGuiItem().getItemStack();
     @Comment("Message to be sent when the player hasn't completed the captcha and tries to enter a command")
     private String message = "&cYou can't use this.";
-    public String getKickMessage() {
-        return kickMessage;
+
+    public EnglishLanguageConfiguration() {
+        this.translations = new HashMap<>();
+        this.translations.put("kick", kickMessage);
+        this.translations.put("barrier", barrier);
+        this.translations.put("letters-gui", itemBuilderLetter);
+        this.translations.put("letters-gui-name", letterMenuName);
+        this.translations.put("default-gui", itemBuilderDefault);
+        this.translations.put("default-gui-name", defaultMenuName);
+        this.translations.put("message", message);
     }
 
-    public String getLetterMenuName() {
-        return letterMenuName;
-    }
-
-    public ItemStack getBarrier() {
-        return barrier;
-    }
-
-    public String getDefaultMenuName() {
-        return defaultMenuName;
-    }
-
-    public ItemStack getItemBuilderLetter() {
-        return itemBuilderLetter;
-    }
-
-    public List<String> getItemBuilderDefault() {
-        return itemBuilderDefault;
-    }
-
-    public String getMessage() {
-        return message;
+    @Override
+    public <T> T translate(String text, Class<T> type) {
+        Object object = this.translations.getOrDefault(text, "");
+        return type.cast(object);
     }
 }
