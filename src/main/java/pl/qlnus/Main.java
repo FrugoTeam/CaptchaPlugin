@@ -7,11 +7,9 @@ import me.cocos.gui.CocosGui;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.qlnus.configuration.Configuration;
 import pl.qlnus.configuration.EnglishLanguageConfiguration;
+import pl.qlnus.configuration.LanguageConfiguration;
 import pl.qlnus.configuration.PolishLanguageConfiguration;
-import pl.qlnus.language.Language;
 import pl.qlnus.language.LanguageContainer;
-import pl.qlnus.language.impl.EnglishLanguage;
-import pl.qlnus.language.impl.PolishLanguage;
 import pl.qlnus.listeners.AsyncPlayerChatListener;
 import pl.qlnus.listeners.PlayerCommandPreProcessListener;
 import pl.qlnus.listeners.PlayerJoinListener;
@@ -24,14 +22,13 @@ import java.util.stream.Stream;
 public final class Main extends JavaPlugin {
 
     private static Main INSTANCE;
-    private Configuration configuration;
-    private EnglishLanguageConfiguration englishLanguage;
-    private PolishLanguageConfiguration polishLanguage;
+  
 
     @Override
     public void onEnable() {
         INSTANCE = this;
-        Language language = null;
+        LanguageConfiguration language = null;
+        Configuration configuration;
         try {
             configuration = ConfigManager.create(Configuration.class, (it) -> {
                 it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
@@ -39,26 +36,19 @@ public final class Main extends JavaPlugin {
                 it.saveDefaults();
                 it.load(true);
             });
-            switch (configuration.getLanguage().toLowerCase()) {
-                case "en" -> {
-                    englishLanguage = ConfigManager.create(EnglishLanguageConfiguration.class, (it) -> {
-                        it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-                        it.withBindFile(new File(this.getDataFolder(), "lang_en.yml"));
-                        it.saveDefaults();
-                        it.load(true);
-                    });
-                    language = new EnglishLanguage();
-                }
-                case "pl" -> {
-                    polishLanguage = ConfigManager.create(PolishLanguageConfiguration.class, (it) -> {
-                        it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-                        it.withBindFile(new File(this.getDataFolder(), "lang_pl.yml"));
-                        it.saveDefaults();
-                        it.load(true);
-                    });
-                    language = new PolishLanguage();
-                }
-                default -> this.getLogger().log(Level.SEVERE, "Unsupported language available: PL, EN");
+            switch (configuration.language) {
+                case EN -> language = ConfigManager.create(EnglishLanguageConfiguration.class, it -> {
+                    it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
+                    it.withBindFile(new File(this.getDataFolder(), "lang_en.yml"));
+                    it.saveDefaults();
+                    it.load(true);
+                });
+                case PL -> language = ConfigManager.create(PolishLanguageConfiguration.class, it -> {
+                    it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
+                    it.withBindFile(new File(this.getDataFolder(), "lang_pl.yml"));
+                    it.saveDefaults();
+                    it.load(true);
+                });
             }
         } catch (Exception exception) {
             this.getLogger().log(Level.SEVERE, "Error loading configuration files.", exception);
@@ -78,16 +68,6 @@ public final class Main extends JavaPlugin {
     public static Main getInstance() {
         return INSTANCE;
     }
-
-    public Configuration getConfiguration() {
-        return configuration;
-    }
-
-    public EnglishLanguageConfiguration getEnglishLanguage() {
-        return englishLanguage;
-    }
-
-    public PolishLanguageConfiguration getPolishLanguage() {
-        return polishLanguage;
-    }
+    
+    
 }
