@@ -17,10 +17,9 @@ import pl.qlnus.services.InventoryService;
 import pl.qlnus.utils.ChatUtil;
 import pl.qlnus.utils.RandomUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public final class LettersVerifyMenu {
 
@@ -28,7 +27,7 @@ public final class LettersVerifyMenu {
     private final InventoryService inventoryService;
     private final Map<Character, ItemStack> letters;
     private final String LETTERS;
-    int[] slots = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
+    private final int[] slots = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35};
 
     public LettersVerifyMenu(InventoryService inventoryService) {
         this.inventoryService = inventoryService;
@@ -49,14 +48,11 @@ public final class LettersVerifyMenu {
         char index = LETTERS.charAt(RandomUtil.getRandom(LETTERS.length()));
         Gui gui = GuiBuilder.normal(LanguageContainer.translate("letters-gui-name", String.class).replaceAll("%letter%", String.valueOf(index)), 4).disposable(true).build();
         gui.setBlockPlayerInventory(true);
-        ItemStack itemStack = LanguageContainer.translate("letters-gui", ItemStack.class);
+        ItemStack itemStack = LanguageContainer.translate("letters-gui", ItemStack.class).clone();
         ItemMeta meta = itemStack.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        for (String line : meta.getLore()) {
-            String s = line.replace("%letter%", String.valueOf(index));
-            lore.add(s);
-        }
-        meta.setLore(lore);
+        meta.setLore(Objects.requireNonNull(meta.getLore()).stream()
+                .map(line -> line.replace("%letter%", String.valueOf(index)))
+                .toList());
         itemStack.setItemMeta(meta);
         gui.setItem(22, GuiItem.of(itemStack));
         int i = 0;
@@ -70,7 +66,6 @@ public final class LettersVerifyMenu {
                     p.kick(ChatUtil.colored(LanguageContainer.translate("kick", String.class)));
                 } else {
                     inventoryService.removeUser(p.getUniqueId());
-                    //p.showTitle(languageConfiguration.getTitle());
                     p.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                     gui.setItem(event.getSlot(), GuiItem.of(LanguageContainer.translate("barrier", ItemStack.class)));
                     Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.closeInventory(), 15);

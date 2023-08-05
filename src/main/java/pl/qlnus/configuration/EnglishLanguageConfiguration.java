@@ -6,6 +6,8 @@ import me.cocos.gui.builder.item.impl.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 
 public final class EnglishLanguageConfiguration extends OkaeriConfig {
     @Comment("Message displayed after an incorrect captcha attempt")
@@ -17,11 +19,7 @@ public final class EnglishLanguageConfiguration extends OkaeriConfig {
     @Comment("Item when verification is successful")
     private ItemStack barrier = ItemBuilder.from(Material.BARRIER).name("&cClicked").asGuiItem().getItemStack();
     @Comment("Item that triggers verification when clicked")
-    private final ItemStack itemBuilderDefault = ItemBuilder.from(Material.LIME_DYE)
-            .name("&aVerification")
-            .lore(" ", "&8>> &aClick to verify!", "")
-            .asGuiItem()
-            .getItemStack();
+    private List<String> itemBuilderDefault = List.of(" ", "&8>> &aClick to verify!", "");
     @Comment("Information on how the captcha works (letter-based)")
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Click the letter &e%letter% &7above to complete &averification", " ").asGuiItem().getItemStack();
 
@@ -45,7 +43,7 @@ public final class EnglishLanguageConfiguration extends OkaeriConfig {
         return itemBuilderLetter;
     }
 
-    public ItemStack getItemBuilderDefault() {
+    public List<String> getItemBuilderDefault() {
         return itemBuilderDefault;
     }
 }

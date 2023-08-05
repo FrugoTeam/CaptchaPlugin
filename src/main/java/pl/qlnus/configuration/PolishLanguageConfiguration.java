@@ -6,6 +6,8 @@ import me.cocos.gui.builder.item.impl.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public final class PolishLanguageConfiguration extends OkaeriConfig {
 
     @Comment("Wiadomosc ktora pokazuje sie po zle wykonanej captchy")
@@ -17,11 +19,7 @@ public final class PolishLanguageConfiguration extends OkaeriConfig {
     @Comment("Item gdy weryfikacja przebiegnie pomyslnie")
     private ItemStack barrier = ItemBuilder.from(Material.BARRIER).name("&cKliknieto").asGuiItem().getItemStack();
     @Comment("Item po ktorym kliknieciu przechodzi sie weryfikacje")
-    private final ItemStack itemBuilderDefault = ItemBuilder.from(Material.LIME_DYE)
-            .name("&aWeryfikacja")
-            .lore(" ", "&8>> &aKliknij aby sie zweryfikowac!", "")
-            .asGuiItem()
-            .getItemStack();
+    private List<String> itemBuilderDefault = List.of(" ", "&8>> &aKliknij aby sie zweryfikowac!", "");
     @Comment("Informacja jak dziala captcha (literowa)")
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Kliknij literke &e%letter% &7wyzej aby przejsc &aweryfikacje", " ").asGuiItem().getItemStack();
 
@@ -45,7 +43,7 @@ public final class PolishLanguageConfiguration extends OkaeriConfig {
         return itemBuilderLetter;
     }
 
-    public ItemStack getItemBuilderDefault() {
+    public List<String> getItemBuilderDefault() {
         return itemBuilderDefault;
     }
 }

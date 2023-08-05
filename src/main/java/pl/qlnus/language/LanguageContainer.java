@@ -1,7 +1,5 @@
 package pl.qlnus.language;
 
-import pl.qlnus.configuration.Configuration;
-
 public final class LanguageContainer {
 
     private LanguageContainer() {
