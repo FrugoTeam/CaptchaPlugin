@@ -8,6 +8,9 @@ public final class LanguageContainer {
     private static Language LANGUAGE;
 
     public static void setLanguage(Language language) {
+        if (LANGUAGE != null) {
+            throw new IllegalStateException();
+        }
         LANGUAGE = language;
     }
 
