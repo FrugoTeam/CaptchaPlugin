@@ -13,20 +13,20 @@ tasks.withType(JavaCompile).configureEach {
 }
 repositories {
     mavenCentral()
-    maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }
+    maven { url("https://repo.papermc.io/repository/maven-public/") }
     maven {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
     maven { url 'https://jitpack.io' }
+    maven { url "https://storehouse.okaeri.eu/repository/maven-public/" }
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT"
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation 'com.github.zitreF:CocosGui:1.1'
+    implementation 'eu.okaeri:okaeri-configs-yaml-bukkit:5.0.0-beta.5'
+    implementation 'eu.okaeri:okaeri-configs-serdes-bukkit:5.0.0-beta.5'
 }
 def targetJavaVersion = 17
 java {
