@@ -4,6 +4,7 @@ import me.cocos.gui.builder.gui.GuiBuilder;
 import me.cocos.gui.builder.item.impl.SkullBuilder;
 import me.cocos.gui.data.GuiItem;
 import me.cocos.gui.gui.Gui;
+import me.cocos.gui.helper.ChatHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -11,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import pl.qlnus.Main;
 import pl.qlnus.language.LanguageContainer;
 import pl.qlnus.services.InventoryService;
-import pl.qlnus.utils.ChatUtil;
 import pl.qlnus.utils.RandomUtil;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public final class VerifyMenu {
         gui.setOnClose((event, p) -> {
             if (!inventoryService.containsUser(p.getUniqueId())) return;
             inventoryService.removeUser(p.getUniqueId());
-            p.kick(ChatUtil.colored(LanguageContainer.translate("kick", String.class)));
+            p.kickPlayer(ChatHelper.colored(LanguageContainer.translate("kick", String.class)));
         });
         gui.setOnClick((inventoryClickEvent, p) -> inventoryClickEvent.setCancelled(true));
         gui.open(player);

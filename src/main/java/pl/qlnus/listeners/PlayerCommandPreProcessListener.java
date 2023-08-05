@@ -1,5 +1,6 @@
 package pl.qlnus.listeners;
 
+import me.cocos.gui.helper.ChatHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,7 +8,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import pl.qlnus.configuration.Configuration;
 import pl.qlnus.language.LanguageContainer;
 import pl.qlnus.services.InventoryService;
-import pl.qlnus.utils.ChatUtil;
 
 public final class PlayerCommandPreProcessListener implements Listener {
 
@@ -27,7 +27,7 @@ public final class PlayerCommandPreProcessListener implements Listener {
         if (inventoryService.containsUser(player.getUniqueId())) {
             if (!configuration.getSet().contains(args[0])) {
                 event.setCancelled(true);
-                player.sendMessage(ChatUtil.colored(LanguageContainer.translate("message", String.class)));
+                player.sendMessage(ChatHelper.colored(LanguageContainer.translate("message", String.class)));
             }
         }
     }
