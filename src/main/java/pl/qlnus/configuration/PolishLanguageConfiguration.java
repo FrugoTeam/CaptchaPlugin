@@ -22,7 +22,8 @@ public final class PolishLanguageConfiguration extends OkaeriConfig {
     private List<String> itemBuilderDefault = List.of(" ", "&8>> &aKliknij aby sie zweryfikowac!", "");
     @Comment("Informacja jak dziala captcha (literowa)")
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Kliknij literke &e%letter% &7wyzej aby przejsc &aweryfikacje", " ").asGuiItem().getItemStack();
-
+    @Comment("Wiadomosc ktora ma sie wyslac gdy gracz nie zrobil captchy i chce wpisac komende")
+    private String message = "&cNie mozesz tego uzyc";
     public String getKickMessage() {
         return kickMessage;
     }
@@ -45,5 +46,9 @@ public final class PolishLanguageConfiguration extends OkaeriConfig {
 
     public List<String> getItemBuilderDefault() {
         return itemBuilderDefault;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

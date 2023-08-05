@@ -55,12 +55,11 @@ public final class LettersVerifyMenu {
                 .toList());
         itemStack.setItemMeta(meta);
         gui.setItem(22, GuiItem.of(itemStack));
-        int i = 0;
         for (int slot : slots) {
             gui.setItem(slot, ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(" ").asGuiItem());
         }
         for (Map.Entry<Character, ItemStack> entry : letters.entrySet()) {
-            gui.setItem(i, GuiItem.of(entry.getValue()).onClick((event, p) -> {
+            gui.setItem(gui.getInventory().firstEmpty(), GuiItem.of(entry.getValue()).onClick((event, p) -> {
                 event.setCancelled(true);
                 if (index != entry.getKey()) {
                     p.kick(ChatUtil.colored(LanguageContainer.translate("kick", String.class)));
@@ -71,7 +70,6 @@ public final class LettersVerifyMenu {
                     Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.closeInventory(), 15);
                 }
             }));
-            i++;
         }
         gui.setOnClick((inventoryClickEvent, p) -> inventoryClickEvent.setCancelled(true));
         gui.setOnClose((event, p) -> {

@@ -22,7 +22,8 @@ public final class EnglishLanguageConfiguration extends OkaeriConfig {
     private List<String> itemBuilderDefault = List.of(" ", "&8>> &aClick to verify!", "");
     @Comment("Information on how the captcha works (letter-based)")
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Click the letter &e%letter% &7above to complete &averification", " ").asGuiItem().getItemStack();
-
+    @Comment("Message to be sent when the player hasn't completed the captcha and tries to enter a command")
+    private String message = "&cYou can't use this.";
     public String getKickMessage() {
         return kickMessage;
     }
@@ -45,5 +46,9 @@ public final class EnglishLanguageConfiguration extends OkaeriConfig {
 
     public List<String> getItemBuilderDefault() {
         return itemBuilderDefault;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

@@ -20,6 +20,7 @@ public final class EnglishLanguage implements Language {
         this.translations.put("letters-gui-name", englishLanguage.getLetterMenuName());
         this.translations.put("default-gui", englishLanguage.getItemBuilderDefault());
         this.translations.put("default-gui-name", englishLanguage.getDefaultMenuName());
+        this.translations.put("message", englishLanguage.getMessage());
     }
 
     @Override

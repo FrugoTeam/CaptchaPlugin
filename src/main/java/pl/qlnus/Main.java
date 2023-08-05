@@ -13,6 +13,7 @@ import pl.qlnus.language.LanguageContainer;
 import pl.qlnus.language.impl.EnglishLanguage;
 import pl.qlnus.language.impl.PolishLanguage;
 import pl.qlnus.listeners.AsyncPlayerChatListener;
+import pl.qlnus.listeners.PlayerCommandPreProcessListener;
 import pl.qlnus.listeners.PlayerJoinListener;
 import pl.qlnus.services.InventoryService;
 
@@ -70,7 +71,8 @@ public final class Main extends JavaPlugin {
         CocosGui.initialize();
         Stream.of(
                 new PlayerJoinListener(inventoryService, configuration),
-                new AsyncPlayerChatListener(inventoryService)
+                new AsyncPlayerChatListener(inventoryService),
+                new PlayerCommandPreProcessListener(inventoryService, configuration)
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

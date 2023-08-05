@@ -20,6 +20,7 @@ public final class PolishLanguage implements Language {
         this.translations.put("letters-gui-name", polishLanguage.getLetterMenuName());
         this.translations.put("default-gui", polishLanguage.getItemBuilderDefault());
         this.translations.put("default-gui-name", polishLanguage.getDefaultMenuName());
+        this.translations.put("message", polishLanguage.getMessage());
     }
 
     @Override
