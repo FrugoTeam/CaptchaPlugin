@@ -1,0 +1,5 @@
+name: VerifyPlayerPlugin
+author: QLN
+version: 1.0
+main: pl.qlnus.Main
+api-version: 1.13
