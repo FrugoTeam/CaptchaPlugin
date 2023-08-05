@@ -39,8 +39,7 @@ public final class Main extends JavaPlugin {
                 it.saveDefaults();
                 it.load(true);
             });
-            String languageCode = this.configuration.getLanguage().toLowerCase();
-            switch (languageCode) {
+            switch (configuration.getLanguage().toLowerCase()) {
                 case "en" -> {
                     englishLanguage = ConfigManager.create(EnglishLanguageConfiguration.class, (it) -> {
                         it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());

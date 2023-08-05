@@ -37,7 +37,7 @@ public final class VerifyMenu {
             inventoryService.removeUser(player.getUniqueId());
             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
             gui.setItem(inventoryClickEvent.getSlot(), GuiItem.of(LanguageContainer.translate("barrier", ItemStack.class)));
-            Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.closeInventory(), 15);
+            Bukkit.getScheduler().runTaskLater(Main.getInstance(), player::closeInventory, 15);
         }));
         gui.setOnClose((event, p) -> {
             if (!inventoryService.containsUser(p.getUniqueId())) return;

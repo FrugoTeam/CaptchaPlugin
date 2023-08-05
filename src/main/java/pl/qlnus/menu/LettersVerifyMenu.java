@@ -67,7 +67,7 @@ public final class LettersVerifyMenu {
                     inventoryService.removeUser(p.getUniqueId());
                     p.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                     gui.setItem(event.getSlot(), GuiItem.of(LanguageContainer.translate("barrier", ItemStack.class)));
-                    Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> player.closeInventory(), 15);
+                    Bukkit.getScheduler().runTaskLater(Main.getInstance(), player::closeInventory, 15);
                 }
             }));
         }
