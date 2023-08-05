@@ -11,6 +11,7 @@ import pl.qlnus.services.InventoryService;
 import pl.qlnus.utils.RandomUtil;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public final class VerifyMenu {
 
@@ -28,21 +29,17 @@ public final class VerifyMenu {
         for (int i = 0; i < 54; i++) {
             gui.setItem(gui.getInventory().firstEmpty(), ItemBuilder.from(Material.BLACK_STAINED_GLASS_PANE).name(" ").asGuiItem());
         }
-        for (int i = 0; i < 2; i++) {
-            int finalI = i;
-            gui.setItem(RandomUtil.getRandom(0, 54), ItemBuilder.from(materials[RandomUtil.getRandom(0, materials.length)]).name("&aWeryfikacja").lore(" ", "&8>> &aKliknij aby sie zweryfikowac!", "").asGuiItem().onClick((inventoryClickEvent, p) -> {
-                inventoryClickEvent.setCancelled(true);
-                verifyStatus[finalI] = true;
-                if (verifyStatus[0] && verifyStatus[1]) {
-                    inventoryService.removeUser(player.getUniqueId());
-                    player.sendTitle(ChatHelper.colored("&aWeryfikacja!"), ChatHelper.colored("&aWeryfikacja przebiegla pomyslnie!"), 15, 20, 15);
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                    System.out.println("Gracz zrobił weryfikację: " + player.getUniqueId() + " " + player.getName());
-                    player.closeInventory();
-                }
-                gui.setItem(inventoryClickEvent.getSlot(), ItemBuilder.from(Material.BARRIER).name("&cKliknieto").asGuiItem());
-            }));
-        }
+        IntStream.range(0,2).forEach(i -> gui.setItem(RandomUtil.getRandom(0, 54), ItemBuilder.from(materials[RandomUtil.getRandom(0, materials.length)]).name("&aWeryfikacja").lore(" ", "&8>> &aKliknij aby sie zweryfikowac!", "").asGuiItem().onClick((inventoryClickEvent, p) -> {
+            inventoryClickEvent.setCancelled(true);
+            verifyStatus[i] = true;
+            if (verifyStatus[0] && verifyStatus[1]) {
+                inventoryService.removeUser(player.getUniqueId());
+                player.sendTitle(ChatHelper.colored("&aWeryfikacja!"), ChatHelper.colored("&aWeryfikacja przebiegla pomyslnie!"), 15, 20, 15);
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                player.closeInventory();
+            }
+            gui.setItem(inventoryClickEvent.getSlot(), ItemBuilder.from(Material.BARRIER).name("&cKliknieto").asGuiItem());
+        })));
         gui.setOnClose((event, p) -> {
             if (!inventoryService.containsUser(p.getUniqueId())) return;
             inventoryService.removeUser(p.getUniqueId());
