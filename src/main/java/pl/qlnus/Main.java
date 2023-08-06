@@ -7,9 +7,11 @@ import me.cocos.gui.CocosGui;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.qlnus.configuration.Configuration;
 import pl.qlnus.configuration.EnglishLanguageConfiguration;
-import pl.qlnus.configuration.LanguageConfiguration;
+import pl.qlnus.language.impl.EnglishLanguage;
+import pl.qlnus.language.Language;
 import pl.qlnus.configuration.PolishLanguageConfiguration;
 import pl.qlnus.language.LanguageContainer;
+import pl.qlnus.language.impl.PolishLanguage;
 import pl.qlnus.listeners.AsyncPlayerChatListener;
 import pl.qlnus.listeners.PlayerCommandPreProcessListener;
 import pl.qlnus.listeners.PlayerJoinListener;
@@ -22,12 +24,15 @@ import java.util.stream.Stream;
 public final class Main extends JavaPlugin {
 
     private static Main INSTANCE;
+
+    private PolishLanguageConfiguration polishLanguageConfiguration;
+    private EnglishLanguageConfiguration englishLanguageConfiguration;
   
 
     @Override
     public void onEnable() {
         INSTANCE = this;
-        LanguageConfiguration language = null;
+        Language language = null;
         Configuration configuration;
         try {
             configuration = ConfigManager.create(Configuration.class, (it) -> {
@@ -37,18 +42,25 @@ public final class Main extends JavaPlugin {
                 it.load(true);
             });
             switch (configuration.language) {
-                case EN -> language = ConfigManager.create(EnglishLanguageConfiguration.class, it -> {
-                    it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-                    it.withBindFile(new File(this.getDataFolder(), "lang_en.yml"));
-                    it.saveDefaults();
-                    it.load(true);
-                });
-                case PL -> language = ConfigManager.create(PolishLanguageConfiguration.class, it -> {
-                    it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-                    it.withBindFile(new File(this.getDataFolder(), "lang_pl.yml"));
-                    it.saveDefaults();
-                    it.load(true);
-                });
+                case EN -> {
+                    englishLanguageConfiguration = ConfigManager.create(EnglishLanguageConfiguration.class, it -> {
+                        it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
+                        it.withBindFile(new File(this.getDataFolder(), "lang_en.yml"));
+                        it.saveDefaults();
+                        it.load(true);
+                    });
+                    language = new EnglishLanguage();
+                }
+                case PL -> {
+                    polishLanguageConfiguration = ConfigManager.create(PolishLanguageConfiguration.class, it -> {
+                        it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
+                        it.withBindFile(new File(this.getDataFolder(), "lang_pl.yml"));
+                        it.saveDefaults();
+                        it.load(true);
+                    });
+                    language = new PolishLanguage();
+                }
+
             }
         } catch (Exception exception) {
             this.getLogger().log(Level.SEVERE, "Error loading configuration files.", exception);
@@ -63,11 +75,18 @@ public final class Main extends JavaPlugin {
                 new AsyncPlayerChatListener(inventoryService),
                 new PlayerCommandPreProcessListener(inventoryService, configuration)
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
+
     }
 
     public static Main getInstance() {
         return INSTANCE;
     }
-    
-    
+
+    public PolishLanguageConfiguration getPolishLanguageConfiguration() {
+        return polishLanguageConfiguration;
+    }
+
+    public EnglishLanguageConfiguration getEnglishLanguageConfiguration() {
+        return englishLanguageConfiguration;
+    }
 }

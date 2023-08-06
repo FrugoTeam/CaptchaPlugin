@@ -1,15 +1,13 @@
 package pl.qlnus.language;
 
-import pl.qlnus.configuration.LanguageConfiguration;
-
 public final class LanguageContainer {
 
     private LanguageContainer() {
     }
 
-    private static LanguageConfiguration LANGUAGE;
+    private static Language LANGUAGE;
 
-    public static void setLanguage(LanguageConfiguration language) {
+    public static void setLanguage(Language language) {
         if (LANGUAGE != null) {
             throw new IllegalStateException();
         }

@@ -1,8 +1,6 @@
 package pl.qlnus.services;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public final class InventoryService {
     private final Set<UUID> uuids;
@@ -12,14 +10,14 @@ public final class InventoryService {
     }
 
     public void addUser(UUID uniqueId) {
-        uuids.add(uniqueId);
+        this.uuids.add(uniqueId);
     }
 
     public void removeUser(UUID uniqueId) {
-        uuids.remove(uniqueId);
+        this.uuids.remove(uniqueId);
     }
 
     public boolean containsUser(UUID uniqueId) {
-        return uuids.contains(uniqueId);
+        return this.uuids.contains(uniqueId);
     }
 }

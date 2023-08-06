@@ -8,8 +8,8 @@ import java.util.List;
 
 public final class Configuration extends OkaeriConfig {
 
-    @Comment({"Ustaw typ captchy, dostepne: default, letters",
-            "Set the captcha type, available options: default, letters."})
+    @Comment({"Ustaw typ captchy, dostepne: default, letters, colors",
+            "Set the captcha type, available options: default, letters, colors."})
     public CaptchaType type = CaptchaType.DEFAULT;
     @Comment({"Wybierz jezyk, dostepne: PL,EN",
             "Choose a language, available: PL, EN"})
@@ -19,10 +19,10 @@ public final class Configuration extends OkaeriConfig {
     public List<String> commands = Arrays.asList("/tpa", "/spawn");
 
     public enum CaptchaType {
-        DEFAULT, LETTERS
+        DEFAULT, LETTERS, COLORS
     }
 
-    public enum LanguageType{
+    public enum LanguageType {
         PL, EN
     }
 }

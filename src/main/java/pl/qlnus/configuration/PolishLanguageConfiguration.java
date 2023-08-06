@@ -1,5 +1,6 @@
 package pl.qlnus.configuration;
 
+import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
 import eu.okaeri.configs.annotation.Exclude;
 import me.cocos.gui.builder.item.impl.ItemBuilder;
@@ -10,10 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class PolishLanguageConfiguration extends LanguageConfiguration {
+public final class PolishLanguageConfiguration extends OkaeriConfig {
 
-    @Exclude
-    private final Map<String, Object> translations;
     @Comment("Wiadomosc ktora pokazuje sie po zle wykonanej captchy")
     private String kickMessage = "&cWystapil blad podczas weryfikacji";
     @Comment("Nazwa gui (literowego)")
@@ -28,22 +27,44 @@ public final class PolishLanguageConfiguration extends LanguageConfiguration {
     private ItemStack itemBuilderLetter = ItemBuilder.from(Material.PAPER).name(" ").lore("&7Kliknij literke &e%letter% &7wyzej aby przejsc &aweryfikacje", " ").asGuiItem().getItemStack();
     @Comment("Wiadomosc ktora ma sie wyslac gdy gracz nie zrobil captchy i chce wpisac komende")
     private String message = "&cNie mozesz tego uzyc";
+    @Comment("Informacja jak dziala captcha (kolory)")
+    private ItemStack itemBuilderColor = ItemBuilder.from(Material.WHITE_WOOL).name(" ").lore("&7Kliknij kolor &e%color% &7aby przejsc &aweryfikacje", " ").asGuiItem().getItemStack();
+    @Comment("nazwa gui (kolor)")
+    private String colorMenuName = "&8x &aWeryfikacja";
 
-
-    public PolishLanguageConfiguration() {
-        this.translations = new HashMap<>();
-        this.translations.put("kick", kickMessage);
-        this.translations.put("barrier", barrier);
-        this.translations.put("letters-gui", itemBuilderLetter);
-        this.translations.put("letters-gui-name", letterMenuName);
-        this.translations.put("default-gui", itemBuilderDefault);
-        this.translations.put("default-gui-name", defaultMenuName);
-        this.translations.put("message", message);
+    public String getKickMessage() {
+        return kickMessage;
     }
 
-    @Override
-    public <T> T translate(String text, Class<T> type) {
-        Object object = this.translations.getOrDefault(text, "");
-        return type.cast(object);
+    public String getLetterMenuName() {
+        return letterMenuName;
+    }
+
+    public String getDefaultMenuName() {
+        return defaultMenuName;
+    }
+
+    public ItemStack getBarrier() {
+        return barrier;
+    }
+
+    public List<String> getItemBuilderDefault() {
+        return itemBuilderDefault;
+    }
+
+    public ItemStack getItemBuilderLetter() {
+        return itemBuilderLetter;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ItemStack getItemBuilderColor() {
+        return itemBuilderColor;
+    }
+
+    public String getColorMenuName() {
+        return colorMenuName;
     }
 }
