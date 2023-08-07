@@ -29,6 +29,8 @@ public final class VerifyMenu {
         gui.setBlockPlayerInventory(true);
         for (int i = 0; i < 54; i++) {
             gui.setItem(gui.getInventory().firstEmpty(), SkullBuilder.fromTexture("e3RleHR1cmVzOntTS0lOOnt1cmw6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2IxYTM1MjhjZDAwMmEwNmFmOTk1MzI1NTIwYjUwZDViZjk2ZDcwZDZiZjRiMmFlM2VjNzNjNWRmNTZkYjI0In19fQ==").name(" ").asGuiItem().onClick((inventoryClickEvent, p) -> {
+                p.kickPlayer(ChatHelper.colored(LanguageContainer.translate("kick", String.class)));
+                inventoryService.removeUser(player.getUniqueId());
                 p.closeInventory();
             }));
         }

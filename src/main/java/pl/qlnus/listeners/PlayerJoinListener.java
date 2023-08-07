@@ -27,6 +27,7 @@ public final class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        inventoryService.addUser(player.getUniqueId());
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -35,8 +36,7 @@ public final class PlayerJoinListener implements Listener {
                     inventoryService.removeUser(player.getUniqueId());
                 }
             }
-        }.runTaskLaterAsynchronously(Main.getInstance(), 20*30);
-        inventoryService.addUser(player.getUniqueId());
+        }.runTaskLaterAsynchronously(Main.getInstance(), 20 * 30);
         switch (configuration.type) {
             case LETTERS -> {
                 LettersVerifyMenu lettersVerifyMenu = new LettersVerifyMenu(inventoryService);

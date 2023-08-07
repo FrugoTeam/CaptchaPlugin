@@ -5,7 +5,9 @@ import me.cocos.gui.builder.item.impl.SkullBuilder;
 import me.cocos.gui.data.GuiItem;
 import me.cocos.gui.gui.Gui;
 import me.cocos.gui.helper.ChatHelper;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -43,26 +45,26 @@ public final class ColorVerifyMenu {
         itemStack.setType(Material.valueOf(COLORS[index].toUpperCase() + "_WOOL"));
         ItemMeta meta = itemStack.getItemMeta();
         meta.setLore(Objects.requireNonNull(meta.getLore()).stream()
-                .map(line -> ChatHelper.colored(line.replace("%color%", LanguageContainer.translate(COLORS[index],  String.class))))
+                .map(line -> ChatHelper.colored(line.replace("%color%", LanguageContainer.translate(COLORS[index], String.class))))
                 .toList());
         itemStack.setItemMeta(meta);
         gui.setItem(22, GuiItem.of(itemStack));
-            for (Map.Entry<String, ItemStack> entry : letters.entrySet()) {
-                if (slotsIndex < slots.length) {
-                    int slot = slots[slotsIndex];
-                    gui.setItem(slot, GuiItem.of(entry.getValue()).onClick((event, p) -> {
-                        if (!entry.getKey().equalsIgnoreCase(COLORS[index])) {
-                            p.kickPlayer(ChatHelper.colored(LanguageContainer.translate("kick", String.class)));
-                        } else {
-                            inventoryService.removeUser(p.getUniqueId());
-                            p.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            gui.setItem(event.getSlot(), GuiItem.of(LanguageContainer.translate("barrier", ItemStack.class)));
-                            Bukkit.getScheduler().runTaskLater(Main.getInstance(), player::closeInventory, 15);
-                        }
-                    }));
-                    slotsIndex++;
-                }
+        for (Map.Entry<String, ItemStack> entry : letters.entrySet()) {
+            if (slotsIndex < slots.length) {
+                int slot = slots[slotsIndex];
+                gui.setItem(slot, GuiItem.of(entry.getValue()).onClick((event, p) -> {
+                    if (!entry.getKey().equalsIgnoreCase(COLORS[index])) {
+                        p.kickPlayer(ChatHelper.colored(LanguageContainer.translate("kick", String.class)));
+                    } else {
+                        inventoryService.removeUser(p.getUniqueId());
+                        p.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                        gui.setItem(event.getSlot(), GuiItem.of(LanguageContainer.translate("barrier", ItemStack.class)));
+                        Bukkit.getScheduler().runTaskLater(Main.getInstance(), player::closeInventory, 15);
+                    }
+                }));
+                slotsIndex++;
             }
+        }
         gui.setOnClick((inventoryClickEvent, p) -> inventoryClickEvent.setCancelled(true));
         gui.setOnClose((event, p) -> {
             if (!inventoryService.containsUser(p.getUniqueId())) return;

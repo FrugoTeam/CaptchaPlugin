@@ -2,15 +2,11 @@ package pl.qlnus.configuration;
 
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Comment;
-import eu.okaeri.configs.annotation.Exclude;
 import me.cocos.gui.builder.item.impl.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import pl.qlnus.language.Language;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public final class EnglishLanguageConfiguration extends OkaeriConfig {

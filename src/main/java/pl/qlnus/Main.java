@@ -7,10 +7,10 @@ import me.cocos.gui.CocosGui;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.qlnus.configuration.Configuration;
 import pl.qlnus.configuration.EnglishLanguageConfiguration;
-import pl.qlnus.language.impl.EnglishLanguage;
-import pl.qlnus.language.Language;
 import pl.qlnus.configuration.PolishLanguageConfiguration;
+import pl.qlnus.language.Language;
 import pl.qlnus.language.LanguageContainer;
+import pl.qlnus.language.impl.EnglishLanguage;
 import pl.qlnus.language.impl.PolishLanguage;
 import pl.qlnus.listeners.AsyncPlayerChatListener;
 import pl.qlnus.listeners.PlayerCommandPreProcessListener;
@@ -27,7 +27,7 @@ public final class Main extends JavaPlugin {
 
     private PolishLanguageConfiguration polishLanguageConfiguration;
     private EnglishLanguageConfiguration englishLanguageConfiguration;
-  
+
 
     @Override
     public void onEnable() {

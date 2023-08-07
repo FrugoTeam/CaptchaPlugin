@@ -1,6 +1,8 @@
 package pl.qlnus.services;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public final class InventoryService {
     private final Set<UUID> uuids;
