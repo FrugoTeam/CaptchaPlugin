@@ -23,10 +23,10 @@ public final class EnglishLanguage implements Language {
         this.translations.put("message", config.getMessage());
         this.translations.put("color-gui", config.getItemBuilderColor());
         this.translations.put("color-gui-name", config.getColorMenuName());
-        this.translations.put("red", "&cczerwony");
-        this.translations.put("green", "&azielony");
-        this.translations.put("blue", "&1niebieski");
-        this.translations.put("yellow", "&ezolty");
+        this.translations.put("red", "&cred");
+        this.translations.put("green", "&agreen");
+        this.translations.put("blue", "&1blue");
+        this.translations.put("yellow", "&eyellow");
     }
 
     @Override
